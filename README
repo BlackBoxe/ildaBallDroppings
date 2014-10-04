@@ -4,3 +4,4 @@ OpenFrameworks version reworked for laser drawing by Nicolas Thill <nico@openwrt
 This is free software, licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0)
 See /LICENSE for more information.
 
+Just clone this repo into your OpenFrameworks "myApps" directory.
