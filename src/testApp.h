@@ -1,7 +1,7 @@
 /*
  * Based on BallDroppings by artist/designer Josh Nimoy (C) 2003
  * Reworked for laser drawing by Nicolas Thill <nico@openwrt.org>
- * 
+ *
  * This is free software, licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0)
  * See /LICENSE for more information.
  */
@@ -46,11 +46,9 @@ class testApp : public ofSimpleApp {
 		void resetVars(); // reset global state variables
 		void resetBalls(); // clear only the balls
 		void resetLines(); // clear only the lines
-		void showPanel(); // sets the info display panel to visible
 
 		float oldMillis; // remembering what time it was
 		bool paused; // freezing the app like pausing the game
-		float ballcolor; // a gray tone for the color of the ball (0 is black, 1 is white)
 
 		static long myBallDropRate; // how fast or slow to release balls
 		static float myFrequencyRange; // pitch range for ball song
@@ -60,7 +58,6 @@ class testApp : public ofSimpleApp {
 		V3 hole;
 
 		ofTrueTypeFont font; // typeface for the info display
-		float displayAlpha; // opacity of the info display
         int xFrameMin;
         int yFrameMin;
         int xFrameMax;

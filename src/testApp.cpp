@@ -1,7 +1,7 @@
 /*
  * Based on BallDroppings by artist/designer Josh Nimoy (C) 2003
  * Reworked for laser drawing by Nicolas Thill <nico@openwrt.org>
- * 
+ *
  * This is free software, licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0)
  * See /LICENSE for more information.
  */
@@ -51,14 +51,12 @@ void testApp::setup()
 
     ofBackground(0);
 	font.loadFont("Verdana.ttf",8);
-	displayAlpha = 0;
 
 	oldMillis=0;
 
 	hole.copyFrom(xFrameMin + MY_FRAME_W / 2, yFrameMin);
 
 	paused = false;
-	ballcolor=1;
 
 	//load a new ball.
 	Ball *b = new Ball(hole);
@@ -112,12 +110,10 @@ void testApp::draw()
 	ofNoFill();
     ofRect(xFrameMin - 2, yFrameMin - 2, MY_FRAME_W + 4, MY_FRAME_H + 4);
 
-	if (displayAlpha > 0) {
-		ofSetColor(ballcolor * 255, ballcolor * 255, ballcolor * 255, displayAlpha );
-		char displayString[512];
-		sprintf(displayString, stats, myBallDropRate, myFriction, myGravity, myFrequencyRange);
-        font.drawString(displayString,20,20);
-	}
+    ofSetColor(255, 255, 255, 255 );
+    char displayString[512];
+    sprintf(displayString, stats, myBallDropRate, myFriction, myGravity, myFrequencyRange);
+    font.drawString(displayString,20,20);
 }
 
 
@@ -148,10 +144,6 @@ void testApp::step()
             }
             b->stepPhysics();
         }
-	}
-
-	if (displayAlpha>0) {
-        displayAlpha--;
 	}
 }
 
@@ -199,38 +191,28 @@ void testApp::resetLines(){
 void testApp::keyPressed(int key){
     if (key == 6) { //toggle full screen
 		ofToggleFullscreen();
-	} else if (key == 'w') { // toggle callcolor
-		ballcolor = !ballcolor;
 	} else if (key == 'B' || key == 'b') {
 		hole.copyFrom(mouseX,mouseY,0);
 	} else if (key == 'r') {
 		myFrequencyRange /= 1.09;
-		showPanel();
 	} else if (key == 'R') {
 		myFrequencyRange *= 1.09;
-		showPanel();
 	} else if (key == 'f') {
 		myFriction += 0.0001f;
-		showPanel();
 	} else if (key == 'F') {
 		myFriction -= 0.0001f;
-		showPanel();
 	} else if (key == 'g') {
 		myGravity-=0.001;
-		showPanel();
 	} else if (key == 'G') {
 		myGravity += 0.001;
-		showPanel();
 	} else if (key == 'p' || key == 'P') {
 		paused = !paused;
 	} else if (key == '0') {
 		resetVars();
 	} else if (key == 45 || key == 95) { // -
 		myBallDropRate -=100;
-		showPanel();
 	} else if (key == 61 || key == 43) { // +
 		myBallDropRate += 100;
-		showPanel();
 	} else if (key == ' ') {
 		if (glutGetModifiers() == GLUT_ACTIVE_CTRL) {
             resetLines();
@@ -287,9 +269,4 @@ void testApp::mouseReleased(int x, int y, int button)
         my_line->y2 = y;
     }
     my_line = 0;
-}
-
-
-void testApp::showPanel(){
-		displayAlpha = 512;
 }
