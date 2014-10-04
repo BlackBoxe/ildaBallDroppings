@@ -114,6 +114,7 @@ void testApp::draw()
     char displayString[512];
     sprintf(displayString, stats, myBallDropRate, myFriction, myGravity, myFrequencyRange);
     font.drawString(displayString,20,20);
+    font.drawString(ildaFrame.getString(), 20, 300);
 }
 
 
