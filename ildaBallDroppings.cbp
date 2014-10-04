@@ -123,7 +123,7 @@
 			<Option virtualFolder="src/" />
 		</Unit>
 		<Unit filename="src/testApp.cpp">
-			<Option virtualFolder="addons/ofxIlda/src/" />
+			<Option virtualFolder="src/" />
 		</Unit>
 		<Unit filename="src/testApp.h">
 			<Option virtualFolder="src/" />
