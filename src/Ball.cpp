@@ -1,7 +1,7 @@
 /*
  * Based on BallDroppings by artist/designer Josh Nimoy (C) 2003
  * Reworked for laser drawing by Nicolas Thill <nico@openwrt.org>
- * 
+ *
  * This is free software, licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0)
  * See /LICENSE for more information.
  */
@@ -17,6 +17,7 @@ Ball::Ball(){
 }
 //----------------------------------------------------
 void Ball::initMem(){
+  color = ofFloatColor(0.0, 0.0, 1.0);
   oldPos.copyFrom(0,0,0);
   force.copyFrom(0,0,0);
   volume = 0;

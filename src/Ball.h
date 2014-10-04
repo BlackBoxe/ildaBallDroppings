@@ -1,7 +1,7 @@
 /*
  * Based on BallDroppings by artist/designer Josh Nimoy (C) 2003
  * Reworked for laser drawing by Nicolas Thill <nico@openwrt.org>
- * 
+ *
  * This is free software, licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0)
  * See /LICENSE for more information.
  */
@@ -21,7 +21,7 @@
 
 class Ball: public V3{
 	public:
-
+		ofFloatColor color;
 #if defined (MY_USE_SOUND)
 		ofSoundPlayer sound;
 #endif

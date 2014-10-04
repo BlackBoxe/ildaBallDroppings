@@ -58,6 +58,8 @@ class testApp : public ofSimpleApp {
 		V3 hole;
 
 		ofTrueTypeFont font; // typeface for the info display
+        int wFrame;
+        int hFrame;
         int xFrameMin;
         int yFrameMin;
         int xFrameMax;

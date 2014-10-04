@@ -1,7 +1,7 @@
 /*
  * Based on BallDroppings by artist/designer Josh Nimoy (C) 2003
  * Reworked for laser drawing by Nicolas Thill <nico@openwrt.org>
- * 
+ *
  * This is free software, licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0)
  * See /LICENSE for more information.
  */
@@ -13,6 +13,7 @@ Line::Line(){
 }
 //------------------------------------------------------------------------------
 void Line::initMem(){
+  color = ofFloatColor(0.0, 1.0, 0.0);
   x1 = 0;
   y1 = 0;
   x2 = 0;

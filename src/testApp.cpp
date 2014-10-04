@@ -44,17 +44,19 @@ void testApp::setup()
     my_lines = new List();
     my_line = 0;
 
-    xFrameMin = (ofGetWidth() - MY_FRAME_W) / 2;
-    yFrameMin = (ofGetHeight() - MY_FRAME_H) / 2;
-    xFrameMax = xFrameMin + MY_FRAME_W;
-    yFrameMax = yFrameMin + MY_FRAME_H;
+    wFrame = MY_FRAME_W;
+    hFrame = MY_FRAME_H;
+    xFrameMin = (ofGetWidth() - wFrame) / 2;
+    yFrameMin = (ofGetHeight() - hFrame) / 2;
+    xFrameMax = xFrameMin + wFrame;
+    yFrameMax = yFrameMin + hFrame;
 
     ofBackground(0);
 	font.loadFont("Verdana.ttf",8);
 
 	oldMillis=0;
 
-	hole.copyFrom(xFrameMin + MY_FRAME_W / 2, yFrameMin);
+	hole.copyFrom(xFrameMin + wFrame / 2, yFrameMin);
 
 	paused = false;
 
@@ -80,20 +82,20 @@ void testApp::update()
 
     ildaFrame.clear();
 
-    ildaFrame.params.output.color.set(0.0, 1.0, 0.0);
     List_for_each(my_lines, link) {
         Line *l = (Line *)(link->data);
         ofPolyline o;
         o.addVertex((l->x1 - xFrameMin) / MY_FRAME_W, (l->y1 - yFrameMin) / MY_FRAME_H);
         o.addVertex((l->x2 - xFrameMin) / MY_FRAME_W, (l->y2 - yFrameMin) / MY_FRAME_H);
+        ildaFrame.params.output.color = l->color;
         ildaFrame.addPoly(o);
 	}
 
-    ildaFrame.params.output.color.set(0.0, 0.0, 1.0);
     List_for_each(my_balls, link) {
         Ball *b = (Ball *)(link->data);
         ofPolyline o = ofPolyline();
         o.arc((b->x - xFrameMin) / MY_FRAME_W, (b->y -yFrameMin) / MY_FRAME_H, (b->jitter*5.0f+2) / MY_FRAME_W, (b->jitter*5.0f+2) / MY_FRAME_H, 0, 360, MY_CIRCLE_RES);
+        ildaFrame.params.output.color = b->color;
         ildaFrame.addPoly(o);
     }
 
