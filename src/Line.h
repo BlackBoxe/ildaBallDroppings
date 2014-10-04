@@ -30,7 +30,7 @@ class Line {
 		bool checkBallCollide(Ball *ball);
 		float checkAngle( float point_x, float point_y,float line_x, float line_y, V3 lineVec);
 		bool diffSign(float a,float b);
-
+        void dim(float value);
 };
 
 #endif /* _LINE_H */

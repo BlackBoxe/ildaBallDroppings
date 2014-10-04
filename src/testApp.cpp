@@ -256,6 +256,8 @@ void testApp::mousePressed(int x, int y, int button)
 
 void testApp::mouseReleased(int x, int y, int button)
 {
+    Link *my_link;
+
     if (!my_line) return;
     if (x < xFrameMin) {
         my_line->x2 = xFrameMin;
@@ -272,4 +274,12 @@ void testApp::mouseReleased(int x, int y, int button)
         my_line->y2 = y;
     }
     my_line = 0;
+
+    List_for_each(my_lines, my_link) {
+        Line *l = (Line *)(my_link->data);
+        l->dim(0.09);
+    }
+    if (my_lines->count > 10) {
+        my_lines->dequeue();
+    }
 }

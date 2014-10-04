@@ -132,3 +132,9 @@ bool Line::diffSign(float v1,float v2){
   if( (v1 >= 0 && v2 < 0 ) || (v2 >= 0 && v1 < 0 ) )return true;
   else return false;
 }
+
+
+void Line::dim(float value)
+{
+    color -= value;
+}
