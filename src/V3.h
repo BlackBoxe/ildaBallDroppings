@@ -1,3 +1,11 @@
+/*
+ * Based on BallDroppings by artist/designer Josh Nimoy (C) 2003
+ * Reworked for laser drawing by Nicolas Thill <nico@openwrt.org>
+ * 
+ * This is free software, licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0)
+ * See /LICENSE for more information.
+ */
+
 #ifndef V3_H
 #define V3_H
 
@@ -6,7 +14,7 @@
 	functions thanks to OpenFrameworks and jttoolkit
 */
 
-class V3{
+class V3 {
 	public:
 		float x;
 		float y;
@@ -25,7 +33,6 @@ class V3{
 		V3 minVecNew(V3 vec);
 		void operator*=(float);
 		void operator+=(V3 v);
-		void lerpSelfTo(V3,float);
 };
 
 #endif

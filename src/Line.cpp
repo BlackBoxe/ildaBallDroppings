@@ -1,21 +1,25 @@
-/**
-@author jtnimoy
-*/
+/*
+ * Based on BallDroppings by artist/designer Josh Nimoy (C) 2003
+ * Reworked for laser drawing by Nicolas Thill <nico@openwrt.org>
+ * 
+ * This is free software, licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0)
+ * See /LICENSE for more information.
+ */
 
-#include "EditLine.h"
+#include "Line.h"
 
-EditLine::EditLine(){
+Line::Line(){
   initMem();
 }
 //------------------------------------------------------------------------------
-void EditLine::initMem(){
+void Line::initMem(){
   x1 = 0;
   y1 = 0;
   x2 = 0;
   y2 = 0;
 }
 //------------------------------------------------------------------------------
-EditLine::EditLine(float _x1,float _y1, float _x2,float _y2){
+Line::Line(float _x1,float _y1, float _x2,float _y2){
   initMem();
   //this makes sure that x1 is always the smallest of the pair.
   x1 = _x2;
@@ -25,28 +29,28 @@ EditLine::EditLine(float _x1,float _y1, float _x2,float _y2){
   fixDirection();
 }
 //------------------------------------------------------------------------------
-EditLine::~EditLine(){
+Line::~Line(){
 
 }
 //------------------------------------------------------------------------------
-void EditLine::set1(float x,float y){
+void Line::set1(float x,float y){
   x1 = x;
   y1 = y;
 }
 //------------------------------------------------------------------------------
-void EditLine::set2(float x,float y){
+void Line::set2(float x,float y){
   x2 = x;
   y2 = y;
 }
 //------------------------------------------------------------------------------
-int EditLine::whichSideY(float x,float y){
+int Line::whichSideY(float x,float y){
   //get the slope - M in y=mx+b
   float m = (y2-y1)/(x2-x1);
   float b = y1 - m*x1;
-  
+
   int fallen_outside=0;
   //now find out if it's hitting the line seg, and not the entire ray.
-  
+
   if(x>x1||x<x2){//if fallen outside
     return 3;
   }else{
@@ -54,7 +58,7 @@ int EditLine::whichSideY(float x,float y){
   }
 }
 //------------------------------------------------------------------------------
-int EditLine::fixDirection(){
+int Line::fixDirection(){
   //this makes sure that x1 is always the smallest of the pair.
   //swap everyone
   int swapReport=0;
@@ -70,7 +74,7 @@ int EditLine::fixDirection(){
   } else {
     swapReport = 0;
   }
-  
+
   //also fix verticality.
   if(x1==x2){
     x1+=0.1;
@@ -78,13 +82,13 @@ int EditLine::fixDirection(){
   return swapReport;
 }
 //--------------------------------------------------------------------------------
-  bool EditLine::checkBallCollide(Ball *ball){
+  bool Line::checkBallCollide(Ball *ball){
 
     V3 lineLocalVec(x2-x1, y2-y1, 0);
 
     //get the angle between the ball and one end of the wall
-    float angleCurrent1 = checkAngle(ball->x , ball->y , x1,y1, lineLocalVec);  
-    float angleCurrent2 = checkAngle(ball->x , ball->y , x2,y2, lineLocalVec);  
+    float angleCurrent1 = checkAngle(ball->x , ball->y , x1,y1, lineLocalVec);
+    float angleCurrent2 = checkAngle(ball->x , ball->y , x2,y2, lineLocalVec);
 
     //lets get the angle between the ball and one end of the wall
     float angleFuture1 = checkAngle(ball->x+ball->force.x, ball->y+ball->force.y ,x1,y1, lineLocalVec);
@@ -106,7 +110,7 @@ int EditLine::fixDirection(){
 
 //--------------------------------------------------------------------------------
 
-  float EditLine::checkAngle( float point_x, float point_y,float line_x, float line_y, V3 lineVec){
+  float Line::checkAngle( float point_x, float point_y,float line_x, float line_y, V3 lineVec){
 
     V3 vec(line_x - point_x, line_y - point_y, 0);
 
@@ -123,7 +127,7 @@ int EditLine::fixDirection(){
 
 //--------------------------------------------------------------------------------
 
-bool EditLine::diffSign(float v1,float v2){
+bool Line::diffSign(float v1,float v2){
   if( (v1 >= 0 && v2 < 0 ) || (v2 >= 0 && v1 < 0 ) )return true;
-  else return false; 
+  else return false;
 }

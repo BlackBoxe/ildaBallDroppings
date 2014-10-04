@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="ildaBallDroppings">
+		<Project filename="../../../../../../../../fun/Projects/openFrameworks/0.8.4/apps/myApps/ildaBallDroppings/ildaBallDroppings.cbp">
+			<Depends filename="../../../../../../../../fun/Projects/openFrameworks/0.8.4/libs/openFrameworksCompiled/project/linux64/libopenFrameworks.cbp" />
+		</Project>
+		<Project filename="../../../../../../../../fun/Projects/openFrameworks/0.8.4/libs/openFrameworksCompiled/project/linux64/libopenFrameworks.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

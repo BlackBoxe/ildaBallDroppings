@@ -1,7 +1,15 @@
-/**
-@author jtnimoy
-*/
+/*
+ * Based on BallDroppings by artist/designer Josh Nimoy (C) 2003
+ * Reworked for laser drawing by Nicolas Thill <nico@openwrt.org>
+ * 
+ * This is free software, licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0)
+ * See /LICENSE for more information.
+ */
+
 #include "V3.h"
+
+// for sqrt
+#include <cmath>
 
 V3::V3(){
 	x=0;
@@ -45,24 +53,24 @@ V3 V3::getLeftNormal(){
 }
 
 void V3::normalize(){
-	float norm = getLength(); 
+	float norm = getLength();
 	x/=norm;
 	y/=norm;
 	z/=norm;
 }
 
 float V3::getLength(){
-	return sqrt( x*x + y*y + z*z );
+	return std::sqrt( x*x + y*y + z*z );
 }
 
 void V3::scaleVec(float scalar){
 	x*=scalar;
 	y*=scalar;
-	z*=scalar; 
+	z*=scalar;
 }
 
 V3 V3::minVecNew(V3 vec){
-	return V3( x - vec.x , y - vec.y , z - vec.z ); 
+	return V3( x - vec.x , y - vec.y , z - vec.z );
 }
 
 
@@ -77,11 +85,4 @@ void V3::operator+=(V3 v){
 	y+=v.y;
 	z+=v.z;
 }
-
-void V3::lerpSelfTo(V3 that,float scale){
-	x+=(that.x-x)*scale;
-	y+=(that.y-y)*scale;
-	z+=(that.z-z)*scale;
-}
-
 
