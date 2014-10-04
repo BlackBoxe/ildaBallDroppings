@@ -5,3 +5,7 @@ This is free software, licensed under Creative Commons Attribution-ShareAlike 3.
 See /LICENSE for more information.
 
 Just clone this repo into your OpenFrameworks "myApps" directory.
+
+Needed addons:
+ - ofxEtherdream
+ - ofxIlda
