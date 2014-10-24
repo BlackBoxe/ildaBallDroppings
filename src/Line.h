@@ -18,6 +18,7 @@ class Line {
 		float y1;
 		float x2;
 		float y2;
+		V3 force;
 		ofFloatColor color;
 		void initMem();
 		Line();
@@ -31,6 +32,7 @@ class Line {
 		float checkAngle( float point_x, float point_y,float line_x, float line_y, V3 lineVec);
 		bool diffSign(float a,float b);
         void dim(float value);
+		void stepPhysics();
 };
 
 #endif /* _LINE_H */

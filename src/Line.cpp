@@ -7,6 +7,7 @@
  */
 
 #include "Line.h"
+#include "testApp.h"
 
 Line::Line(){
   initMem();
@@ -14,6 +15,7 @@ Line::Line(){
 //------------------------------------------------------------------------------
 void Line::initMem(){
   color = ofFloatColor(0.0, 1.0, 0.0);
+  force.copyFrom(0,0,0);
   x1 = 0;
   y1 = 0;
   x2 = 0;
@@ -138,3 +140,14 @@ void Line::dim(float value)
 {
     color -= value;
 }
+
+void Line::stepPhysics()
+{
+  x1 += force.x;
+  y1 += force.y;
+  x2 += force.x;
+  y2 += force.y;
+
+  force *= testApp::myFriction * 0.9;
+}
+//----------------------------------------------------

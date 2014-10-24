@@ -13,6 +13,7 @@
 #define MY_DEF_FRICTION  0.99997f
 #define MY_DEF_GRAVITY  0.01f
 
+#define MY_DEF_FPS  25
 #define MY_DEF_PPS  25000
 
 #define MY_FRAME_W  400
@@ -29,12 +30,8 @@ static char *stats =
     "gravity: %f [g G]\n"
     "pitch range: %f [r R]\n"
     "\n"
-    "shift-space clears balls\n"
-    "ctrl-space clears lines\n"
-    "space alone clears all\n"
-    "ctrl-z to undo line editing\n"
-    "ctrl-f toggles fullscreen\n"
-    "w inverts video\n"
+    "shift-space clears lines\n"
+    "space alone clears balls\n"
     "b moves balldropper to mouse\n"
     "p pause\n";
 
@@ -44,6 +41,7 @@ void testApp::setup()
     my_lines = new List();
     my_line = 0;
 
+	paused = false;
     wFrame = MY_FRAME_W;
     hFrame = MY_FRAME_H;
     xFrameMin = (ofGetWidth() - wFrame) / 2;
@@ -58,17 +56,18 @@ void testApp::setup()
 
 	hole.copyFrom(xFrameMin + wFrame / 2, yFrameMin);
 
-	paused = false;
-
-	//load a new ball.
-	Ball *b = new Ball(hole);
-	my_balls->enqueue(b);
+    ofSetFrameRate(MY_DEF_FPS);
 
     etherdream.setup();
     etherdream.setPPS(MY_DEF_PPS);
 
     ildaFrame.params.output.transform.doFlipX = true;
     ildaFrame.params.output.transform.doFlipY = true;
+    ildaFrame.params.output.transform.scale = ofVec2f(0.5);
+
+	//load a new ball.
+	Ball *b = new Ball(hole);
+	my_balls->enqueue(b);
 }
 
 //--------------------------------------------------------------
@@ -125,11 +124,17 @@ void testApp::step()
     Link *my_ball_link, *my_ball_link_temp;
     Link *my_line_link;
 
+if (my_balls->count < 8) {
 	if (glutGet(GLUT_ELAPSED_TIME) - oldMillis > myBallDropRate) {
 		createBall();
 		oldMillis = glutGet(GLUT_ELAPSED_TIME);
 	}
-
+}
+    List_for_each(my_lines, my_line_link) {
+        Line *l = (Line*)(my_line_link->data);
+        if (l == my_line) continue;
+        l->stepPhysics();
+    }
     List_for_each_safe(my_balls, my_ball_link, my_ball_link_temp) {
 		Ball *b = (Ball*)(my_ball_link->data);
         if ((b->x < xFrameMin) || (b->x > xFrameMax) || (b->y < yFrameMin) || (b->y > yFrameMax) || b->force.getLength() == 0) {
@@ -139,8 +144,8 @@ void testApp::step()
             b->applyForce(0, myGravity); // gravity
             List_for_each(my_lines, my_line_link) {
                 Line *l = (Line*)(my_line_link->data);
+                if (l == my_line) continue;
                 if (l->checkBallCollide(b)) {
-                    b->amnesia();
                     b->bounce(l->x1, l->y1, l->x2, l->y2);
                     break; // skip the rest of the lines
                 }
@@ -192,8 +197,14 @@ void testApp::resetLines(){
 
 
 void testApp::keyPressed(int key){
-    if (key == 6) { //toggle full screen
-		ofToggleFullscreen();
+    if (key == 'a') {
+        ildaFrame.params.output.transform.scale -= 0.1;
+    } else if (key == 'z') {
+        ildaFrame.params.output.transform.scale += 0.1;
+    } else if (key == 'q') {
+        ildaFrame.polyProcessor.params.targetPointCount -= 10;
+    } else if (key == 's') {
+        ildaFrame.polyProcessor.params.targetPointCount += 10;
 	} else if (key == 'B' || key == 'b') {
 		hole.copyFrom(mouseX,mouseY,0);
 	} else if (key == 'r') {
@@ -217,10 +228,8 @@ void testApp::keyPressed(int key){
 	} else if (key == 61 || key == 43) { // +
 		myBallDropRate += 100;
 	} else if (key == ' ') {
-		if (glutGetModifiers() == GLUT_ACTIVE_CTRL) {
+		if (glutGetModifiers() == GLUT_ACTIVE_SHIFT) {
             resetLines();
-		} else if (glutGetModifiers() == GLUT_ACTIVE_SHIFT ){
-            resetBalls();
 		} else { // else kill both the lines and the balls.
             resetBalls();
             resetLines();
@@ -277,9 +286,9 @@ void testApp::mouseReleased(int x, int y, int button)
 
     List_for_each(my_lines, my_link) {
         Line *l = (Line *)(my_link->data);
-        l->dim(0.09);
+        l->dim(1.0 / (5+1.0));
     }
-    if (my_lines->count > 10) {
+    if (my_lines->count > 5) {
         my_lines->dequeue();
     }
 }
